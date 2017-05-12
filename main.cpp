@@ -92,6 +92,7 @@ int main() {
         }
     }
     aux = "";
+    //decodificar
     for(int i = 0; i < text.size(); i++){
 
         a1 = i % gcd;
