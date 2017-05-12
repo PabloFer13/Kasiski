@@ -14,6 +14,14 @@ void inicializa(int *arr, int tam){
     }
 }
 
+int encuentra(char c, char *arr){
+    int i = 0;
+    while(arr[i] != c){
+        i++;
+    }
+    return i;
+}
+
 int main() {
 
     string text;
@@ -21,10 +29,11 @@ int main() {
     string clave = "";
     vector<int> distancias;
     bool bandera = true;
-    int gcd, n, resp, fMax, mPos, resta;
+    int gcd, n, resp, fMax, mPos, a1,a2;
     int frecuencias[27];
     inicializa(frecuencias, 27);
     getline(cin,text);
+    char letras[27];
     for(int i = 0; i < text.size()-2; i++){
         aux = text.substr(i,3);
         sub.find(aux) == sub.end() ? sub[aux].push_back(i) : sub.find(aux)->second.push_back(i);
@@ -73,26 +82,27 @@ int main() {
 
     cout << clave << endl;
 
-    for(int i = 0; i < text.size(); i++){
-        bandera = false;
-        if(clave[i%gcd] >= 79){
-            resta = clave[i%gcd]+1-65;
+    for(int i = 0; i < 27; i++){
+        if(i == 14){
+            letras[i] = 165;
+        }else if(i > 14){
+            letras[i] = 64 + i;
         }else{
-            resta = clave[i%gcd] - 65;
+            letras[i] = 65 + i;
         }
-        if(text[i] >= 79){
-            text[i]++;
-            bandera = true;
-        }
-        if(text[i] - resta < 65){
-            text[i] += 27;
-        }
-        text[i] -= resta;
-        if(bandera){
-            text[i]--;
-        }
-        cout << text[i];
     }
+    aux = "";
+    for(int i = 0; i < text.size(); i++){
 
+        a1 = i % gcd;
+        a1 = encuentra(clave[a1], letras);
+        a2 = encuentra(text[i], letras);
+
+        /*if(a2 > 14 && (a2-a1) < 14){
+            a1--;
+        }*/
+        aux.push_back(letras[((a2 - a1) + 26) % 26]);
+    }
+    cout << aux;
     return 0;
 }
